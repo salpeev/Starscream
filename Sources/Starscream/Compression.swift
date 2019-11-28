@@ -56,7 +56,8 @@ class Decompressor {
     }
 
     func decompress(_ data: Data, finish: Bool) throws -> Data {
-        return try data.withUnsafeBytes { (bytes:UnsafePointer<UInt8>) -> Data in
+        return try data.withUnsafeBytes { buffer in
+            let bytes = buffer.bindMemory(to: UInt8.self).baseAddress!
             return try decompress(bytes: bytes, count: data.count, finish: finish)
         }
     }
@@ -137,7 +138,9 @@ class Compressor {
     func compress(_ data: Data) throws -> Data {
         var compressed = Data()
         var res:CInt = 0
-        data.withUnsafeBytes { (ptr:UnsafePointer<UInt8>) -> Void in
+        data.withUnsafeBytes { bufPtr -> Void in
+            let ptr = bufPtr.bindMemory(to: UInt8.self).baseAddress!
+            
             strm.next_in = UnsafeMutablePointer<UInt8>(mutating: ptr)
             strm.avail_in = CUnsignedInt(data.count)
 

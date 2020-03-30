@@ -81,7 +81,9 @@ class Decompressor {
         strm.avail_in = CUnsignedInt(count)
 
         repeat {
-            strm.next_out = UnsafeMutablePointer<UInt8>(&buffer)
+            strm.next_out = buffer.withUnsafeMutableBufferPointer { bufferPointer in
+                return bufferPointer.baseAddress
+            }
             strm.avail_out = CUnsignedInt(buffer.count)
 
             res = inflate(&strm, 0)
@@ -145,7 +147,9 @@ class Compressor {
             strm.avail_in = CUnsignedInt(data.count)
 
             repeat {
-                strm.next_out = UnsafeMutablePointer<UInt8>(&buffer)
+                strm.next_out = buffer.withUnsafeMutableBufferPointer { bufferPointer in
+                    return bufferPointer.baseAddress
+                }
                 strm.avail_out = CUnsignedInt(buffer.count)
 
                 res = deflate(&strm, Z_SYNC_FLUSH)

@@ -183,11 +183,11 @@
 			};
 			buildConfigurationList = 6B3E79E019D48B7F006071F7 /* Build configuration list for PBXProject "Starscream" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				English,
 				en,
+				Base,
 			);
 			mainGroup = 6B3E79DC19D48B7F006071F7;
 			productRefGroup = 6B3E79E719D48B7F006071F7 /* Products */;
